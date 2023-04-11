@@ -1,0 +1,1000 @@
+<sb-layout-dashboard
+    ><sb-dashboard-head title="Ordem de serviço" [hideBreadcrumbs]="false"></sb-dashboard-head>
+    <div class="row" *ngIf="false">
+        <div class="col-lg-12">
+            <sb-card
+                ><div class="card-header">
+                    <fa-icon class="mr-1" [icon]="['fas', 'chart-bar']"></fa-icon>Lista de Pedidos
+                </div>
+                <div class="card-body">
+                    <table class="table align-middle mb-0 bg-white" style="">
+                        <thead>
+                            <tr>
+                                <th scope="col">Cliente</th>
+                                <th scope="col">Data:</th>
+                                <th scope="col">Data da entrega:</th>
+                                <th scope="col">Forma de Pagamento:</th>
+                                <th scope="col">Preço:</th>
+                                <th scope="col">Tipo de produto:</th>
+                                <th scope="col">Status:</th>
+                                <th scope="col">Opções:</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let order of listOrders">
+                                <td>{{ order.cliente }}</td>
+                                <td>{{ order.data | date: 'dd/MM/yyyy' }}</td>
+                                <td>{{ order.dtEntrega | date: 'dd/MM/yyyy' }}</td>
+                                <td>{{ order.formaPagamento }}</td>
+                                <td>R${{ order.valor | mask: '0000,00' }}</td>
+                                <td>
+                                    {{ order.lente == true ? 'Lente' : '' }} +
+                                    {{ order.oculos == true ? 'Óculos' : '' }}
+                                </td>
+                                <td>{{ order.status }}</td>
+                                <td>
+                                    <input
+                                        type="checkbox"
+                                        name=""
+                                        (click)="redirecionarFormularioEdicao(order)"
+                                    />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-right"></div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-primary m-l-10 m-r-10">
+                                Alterar
+                            </button>
+                            <button
+                                type="button"
+                                style="margin-left: 10px"
+                                class="btn btn-primary m-l-10 m-r-10"
+                                (click)="redirecionarFormularioEdicao()"
+                            >
+                                Visualizar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer small text-muted"></div>
+            </sb-card>
+        </div>
+    </div>
+
+    <sb-card
+        ><div class="card-header">
+            <fa-icon class="mr-1" [icon]="['fas', 'chart-area']"></fa-icon>Cadastro
+        </div>
+        <div class="card-body">
+            <form [formGroup]="form">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Cliente: </label>
+
+                        <input
+                            class="form-control ml-12"
+                            type="text"
+                            name="nome"
+                            formControlName="cliente"
+                            id="01"
+                            style="width: 100%"
+                        />
+                    </div>
+                    <div class="col-md-3">
+                        <label>CPF: </label>
+
+                        <input
+                            class="form-control ml-12"
+                            type="text"
+                            formControlName="cpf"
+                            id="01"
+                            style="width: 100%"
+                            mask="000.000.000-00"
+                        />
+                    </div>
+                    <div class="col-md-3">
+                        <label>Data Nacimento: </label>
+
+                        <input
+                            class="form-control ml-12"
+                            type="date"
+                            name="nome"
+                            formControlName="dtNacimento"
+                            id="01"
+                            style="width: 100%"
+                        />
+                    </div>
+                    <div class="col-md-6">
+                        <label>Email: </label>
+
+                        <input
+                            class="form-control ml-12"
+                            type="email"
+                            name="email"
+                            formControlName="email"
+                            id="01"
+                            style="width: 100%"
+                        />
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Telefone: </label>
+
+                        <input
+                            class="form-control ml-12"
+                            type="text"
+                            name=""
+                            formControlName="telefone"
+                            id="01"
+                            style="width: 100%"
+                            mask="(00) 0000-0000"
+                        />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label>Tipo de Lente: </label>
+
+                        <input
+                            class="form-control ml-12"
+                            type="text"
+                            name="nome"
+                            formControlName="tipoLente"
+                            id="01"
+                            style="width: 100%"
+                        />
+                    </div>
+                    <div class="col-md-3">
+                        <label>Data:</label>
+                        <br />
+
+                        <input
+                            class="form-control ml-12"
+                            style="width: 100%"
+                            type="date"
+                            name="nome"
+                            formControlName="data"
+                            id="evento.noEvento"
+                        />
+                    </div>
+                    <div class="col-md-3">
+                        <label>Tipo de Armação:</label>
+                        <select
+                            class="form-control ml-12"
+                            style="width: 100%; text-align: center"
+                            name=""
+                            id=""
+                            formControlName="noArmacao"
+                        >
+                            <option value="Próprio">Próprio</option>
+                            <option value="Armações Loja"> Armações Loja</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Data da etrega:</label>
+
+                        <input
+                            class="form-control ml-12"
+                            type="date"
+                            name="nome"
+                            formControlName="dtEntrega"
+                            id="01"
+                            style="width: 100%"
+                        />
+                    </div>
+                </div>
+                <br />
+
+                <div class="row">
+                    <div
+                        class="col-md-2"
+                        style="
+                            margin-left: 50px;
+                            text-align: right;
+                            margin-right: 50px;
+                            margin-top: 10px;
+                        "
+                    >
+                        <br />
+                        <br />
+                        <br />
+                        <h1>LONGE</h1>
+                        <br />
+                        <br />
+                        <h1>PERTO</h1>
+                        <br />
+                        <br />
+                        <br />
+                    </div>
+                    <div class="col-mb-9" style="text-align: center">
+                        <table class="table align-middle mb-0 bg-white">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th></th>
+                                    <th>ESF</th>
+                                    <th>CIL</th>
+                                    <th>EIXO</th>
+                                    <th>DNP</th>
+                                    <th>ALTURA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>OD</td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="esfLongeOD"
+                                            id=""
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="cilLongeOD"
+                                            id=""
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="eixoLongeOD"
+                                            id=""
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="dnpLongeOD"
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="alturaLongeOD"
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>OE</td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="esfLongeOE"
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="cilLongeOE"
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="eixoLongeOE"
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="dnpLongeOE"
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="alturaLongeOE"
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>OD</td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="esfPertoOD"
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="cilPertoOD"
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="eixoPertoOD"
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="dnpPertoOD"
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="alturaPertoOD"
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>OE</td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="esfPertoOE"
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="cilPertoOE"
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="eixoPertoOE"
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="dnpPertoOE"
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            class="form-control ml-12"
+                                            style="width: 70px"
+                                            type="text"
+                                            name=""
+                                            formControlName="alturaPertoOE"
+                                            mask="00.00"
+                                            [patterns]="customPatterns"
+                                            [dropSpecialCharacters]="false"
+                                        />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <label for=""> Adição:</label>
+                        <input
+                            class="form-control ml-12"
+                            style="width: 100%"
+                            type="text"
+                            formControlName="adicao"
+                            name=""
+                            id=""
+                        />
+                    </div>
+                    <div class="col-md-2">
+                        <label for=""> Horário:</label>
+                        <input
+                            class="form-control ml-12"
+                            type="text"
+                            name=""
+                            formControlName="horario"
+                            mask="00:00"
+                            id=""
+                        />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for=""> DM:</label>
+                        <input
+                            class="form-control ml-12"
+                            style="width: 100%"
+                            type="text"
+                            name=""
+                            formControlName="dm"
+                            id=""
+                        />
+                    </div>
+                    <div class="col-md-3">
+                        <label for=""> Vert:</label>
+                        <input
+                            style="width: 100%"
+                            type="text"
+                            name=""
+                            formControlName="vert"
+                            id=""
+                            class="form-control ml-12"
+                            mask="00.00"
+                        />
+                    </div>
+                    <div class="col-md-3">
+                        <label for=""> Hor:</label>
+                        <input
+                            style="width: 100%"
+                            type="text"
+                            name=""
+                            formControlName="hor"
+                            id=""
+                            class="form-control ml-12"
+                            mask="00.00"
+                        />
+                    </div>
+                    <div class="col-md-3">
+                        <label for=""> Ponte:</label>
+                        <input
+                            class="form-control ml-12"
+                            style="width: 100%"
+                            type="text"
+                            name=""
+                            formControlName="ponte"
+                            id=""
+                            mask="00.00"
+                        />
+                    </div>
+                    <div class="col-md-12">
+                        <label for=""> OBS:</label>
+                        <input
+                            class="form-control ml-12"
+                            style="width: 100%"
+                            type="text"
+                            name=""
+                            formControlName="obs"
+                            id=""
+                        />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="">Forma de pagamento:</label>
+                        <select
+                            class="form-control ml-12"
+                            style="width: 100%; text-align: center"
+                            name=""
+                            id=""
+                            formControlName="formaPagamento"
+                        >
+                            <option value="Cartão de Credito">Cartão de Credito</option>
+                            <option value="Cartão de Debito">Cartão de Debito</option>
+                            <option value="Boleto">Boleto</option>
+                            <option value="Dinheiro">Dinheiro</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2" *ngIf="form.value.formaPagamento == 'Cartão de Credito'">
+                        <label for="">Numero de Parcelas:</label>
+
+                        <select
+                            class="form-control ml-12"
+                            style="width: 100%; text-align: center"
+                            name=""
+                            id=""
+                            formControlName="parcelaCartao"
+                        >
+                            <option value="1">1x</option>
+                            <option value="2">2x</option>
+                            <option value="3">3x</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="">Valor Recebido:</label>
+                        <input
+                            class="form-control ml-12"
+                            type="text"
+                            formControlName="valor"
+                            mask="0*,00"
+                            placeholder="R$000,00"
+                        />
+                    </div>
+                    <div class="col-md-2">
+                        <label for="">Valor a pagar:</label>
+                        <input
+                            class="form-control ml-12"
+                            type="text"
+                            formControlName="valorApagar"
+                            placeholder="R$000,00"
+                            mask="0*,00"
+                        />
+                    </div>
+                    <div class="col-md-2">
+                        <label for="">Sinal:</label>
+                        <input class="form-control ml-12" type="text" formControlName="sinal" />
+                    </div>
+                </div>
+            </form>
+            <br />
+            <div class="row">
+                <div class="col-md-12" style="text-align: right">
+                    <button
+                        type="button"
+                        class="btn btn-primary m-l-10 m-r-10"
+                        (click)="verificaDados()"
+                    >
+                        CADASTRAR
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer small text-muted"></div
+    ></sb-card>
+    <sb-card>
+        <div class="modal card-header">
+            <div class="modalHead">
+                <h3>Froma de Pagamento</h3>
+            </div>
+            <hr />
+            <div class="modalBody">
+                <form [formGroup]="form">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <input
+                                class="form-control ml-12"
+                                style="width: 100%"
+                                type="text"
+                                name=""
+                                formControlName="vert"
+                                id=""
+                            />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </sb-card>
+
+    <sb-card *ngIf="isModal">
+        <div
+            class="card-body"
+            style="
+                position: fixed;
+                top: 10%;
+                left: 10%;
+                width: 80%;
+                height: 100%;
+                background-color: white;
+                padding: 10px;
+                cursor: pointer;
+                border-radius: 10px;
+                border: 1px solid #8080803b;
+                box-shadow: 1px 1px #88888838;
+                overflow-y: scroll;
+                overflow-x: hidden;
+                max-height: 550px;
+            "
+            (click)="isModal = false"
+        >
+            <h3 style="font-size: 35px; margin: 10px">
+                Informações da Ordem de serviço
+                <span
+                    style="
+                        text-align: right;
+                        float: right;
+                        margin-right: 20px;
+                        font-size: 25px;
+                        margin: 10px;
+                    "
+                    >X</span
+                >
+            </h3>
+            <hr />
+            <div class="row">
+                <div class="col-md-4"><strong>Cliente: </strong> {{ orderSelect.cliente }}</div>
+                <div class="col-md-4"><strong>Numero da Ordem: </strong> {{ orderSelect.id }}</div>
+                <div class="col-md-4">
+                    <strong>Data: </strong> {{ orderSelect.data | date: 'dd/MM/yyyy' }}
+                </div>
+                <div class="col-md-4">
+                    <strong>Data de entrega: </strong>
+                    {{ orderSelect.dtEntrega | date: 'dd/MM/yyyy' }}
+                </div>
+                <div class="col-md-4">
+                    <strong>Tipo de Lente: </strong> {{ orderSelect.tipoLente }}
+                </div>
+                <div class="col-md-4">
+                    <strong>Tipo Armação: </strong> {{ orderSelect.noArmacao }}
+                </div>
+
+                <div class="col-md-12" style="margin-top: 20px; margin-bottom: 10px">
+                    <div class="row">
+                        <div
+                            class="col-md-2"
+                            style="
+                                margin-left: 0px;
+                                text-align: right;
+                                margin-right: 0px;
+                                margin-top: 10px;
+                            "
+                        >
+                            <br />
+                            <br />
+                            <br />
+                            <h5>LONGE</h5>
+                            <br />
+                            <br />
+                            <br />
+                            <h5>PERTO</h5>
+                            <br />
+                            <br />
+                            <br />
+                        </div>
+                        <div class="col-md-8">
+                            <table class="table align-middle mb-0 bg-white">
+                                <thead class="bg-light">
+                                    <tr>
+                                        <th></th>
+                                        <th>ESF</th>
+                                        <th>CIL</th>
+                                        <th>EIXO</th>
+                                        <th>DNP</th>
+                                        <th>ALTURA</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>OD</td>
+                                        <td>
+                                            <input
+                                                class="form-control ml-12"
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.esfLongeOD }}"
+                                                id=""
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                class="form-control ml-12"
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.cilLongeOD }}"
+                                                id=""
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                class="form-control ml-12"
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.eixoLongeOD }}"
+                                                id=""
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.dnpLongeOD }}"
+                                                class="form-control ml-12"
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.alturaLongeOD }}"
+                                                class="form-control ml-12"
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>OE</td>
+                                        <td>
+                                            <input
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.esfLongeOE }}"
+                                                class="form-control ml-12"
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.cilLongeOE }}"
+                                                class="form-control ml-12"
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.eixoLongeOE }}"
+                                                class="form-control ml-12"
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.dnpLongeOE }}"
+                                                class="form-control ml-12"
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.alturaLongeOE }}"
+                                                class="form-control ml-12"
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>OD</td>
+                                        <td>
+                                            <input
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.esfPertoOD }}"
+                                                class="form-control ml-12"
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.cilPertoOD }}"
+                                                class="form-control ml-12"
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.eixoPertoOD }}"
+                                                class="form-control ml-12"
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.dnpPertoOD }}"
+                                                class="form-control ml-12"
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.alturaPertoOD }}"
+                                                class="form-control ml-12"
+                                            />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>OE</td>
+                                        <td>
+                                            <input
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.esfPertoOE }}"
+                                                class="form-control ml-12"
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.cilPertoOE }}"
+                                                class="form-control ml-12"
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.eixoPertoOE }}"
+                                                class="form-control ml-12"
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.dnpPertoOE }}"
+                                                class="form-control ml-12"
+                                            />
+                                        </td>
+                                        <td>
+                                            <input
+                                                style="width: 70px"
+                                                type="text"
+                                                disabled
+                                                value="{{ orderSelect.alturaPertoOE }}"
+                                                class="form-control ml-12"
+                                            />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <strong>Adição: </strong> {{ orderSelect.adicao | mask: '00.00' }}
+                </div>
+
+                <div class="col-md-4"><strong>Horario: </strong> {{ orderSelect.horario }}</div>
+                <div class="col-md-4">
+                    <strong>DM: </strong> {{ orderSelect.vert | mask: '00.00' }}
+                </div>
+                <div class="col-md-4">
+                    <strong>HOR: </strong> {{ orderSelect.hor | mask: '00.00' }}
+                </div>
+                <div class="col-md-4">
+                    <strong>Ponte: </strong> {{ orderSelect.ponte | mask: '00.00' }}
+                </div>
+                <div class="col-md-4">
+                    <strong>Obs: </strong> {{ orderSelect.obs | mask: '00.00' }}
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>Forma Pagamento</h5>
+                </div>
+                <div class="col-md-4">
+                    <strong>Tipo de Pagamento:</strong> {{ orderSelect.formaPagamento }}
+                </div>
+                <div class="col-md-4" *ngIf="orderSelect.parcelaCatao">
+                    <strong>Numeros de Parcelas:</strong> {{ orderSelect.parcelaCatao }}
+                </div>
+                <div class="col-md-4">
+                    <strong>Valor Recebido: </strong>R${{ orderSelect.valor | mask: '0000,00' }}
+                </div>
+                <div class="col-md-4">
+                    <strong>Valor a Pagar: </strong> R${{
+                        orderSelect.valorApagar | mask: '0000,00'
+                    }}
+                </div>
+                <div class="col-md-4"><strong>Sinal:</strong> {{ orderSelect.sinal }}</div>
+                <div class="col-md-4">
+                    <strong>Nome Funcionario:</strong> {{ orderSelect.noFuncionario }}
+                </div>
+            </div>
+        </div>
+    </sb-card>
+</sb-layout-dashboard>

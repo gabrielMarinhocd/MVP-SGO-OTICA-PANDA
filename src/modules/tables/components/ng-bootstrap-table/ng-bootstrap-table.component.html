@@ -1,0 +1,615 @@
+<form style="overflow-x: scroll">
+    <div class="row">
+        <div class="col-md-3">
+            Pesquisa por texto:
+            <input
+                class="form-control ml-12"
+                type="text"
+                name="searchTerm"
+                [(ngModel)]="countryService.searchTerm"
+            /><span class="ml-3" *ngIf="countryService.loading$ | async">Loading...</span>
+        </div>
+        <div class="col-md-3">
+            Data:
+            <input
+                class="form-control ml-12"
+                type="date"
+                name="filterOrder"
+                [(ngModel)]="filterDate"
+            />
+        </div>
+        <div class="col-md-3">
+            Cliente:
+            <input
+                class="form-control ml-12"
+                type="text"
+                name="filterOrder"
+                [(ngModel)]="filterCliente"
+            />
+        </div>
+        <div class="col-md-3">
+            Status:
+            <select
+                class="form-control ml-12"
+                style="width: 100%; text-align: center"
+                name=""
+                id=""
+                (change)="selectStatus($event)"
+            >
+                <option [ngValue]=""></option>
+                <option [ngValue]="ativo">Ativo</option>
+                <option [ngValue]="desativado">Desativado</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            Forma Pagamento:
+            <select
+                class="form-control ml-12"
+                style="width: 100%; text-align: center"
+                name=""
+                id=""
+                (change)="selectPagamento($event)"
+            >
+                <option value=""></option>
+
+                <option value="Cartão de Credito">Cartão de Credito</option>
+                <option value="Cartão de Debito">Cartão de Debito</option>
+                <option value="Boleto">Boleto</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            Tipo de Armação
+            <select
+                class="form-control ml-12"
+                style="width: 100%; text-align: center"
+                name=""
+                id=""
+                (change)="selectArmacao($event)"
+            >
+                <option value=""></option>
+                <option value="Próprio">Próprio</option>
+                <option value="Armações Loja">Armações Loja</option>
+            </select>
+        </div>
+        <div class="col-md-12">
+            <br />
+            <button type="button" class="btn btn-primary m-l-10 m-r-10" (click)="filterOrder()">
+                Pesquisar
+            </button>
+            <button
+                style="margin-left: 10px"
+                type="button"
+                class="btn btn-primary m-l-10 m-r-10"
+                (click)="this.isModal = true"
+                [disabled]="orderSelect.id == null"
+            >
+                Vizualizar
+            </button>
+            <button
+                style="margin-left: 10px"
+                type="button"
+                class="btn btn-primary m-l-10 m-r-10"
+                routerLink="/charts"
+            >
+                Cadastrar
+            </button>
+            <button
+                style="margin-left: 10px"
+                type="button"
+                class="btn btn-primary m-l-10 m-r-10"
+                disabled
+            >
+                Alterar
+            </button>
+            <button
+                style="margin-left: 10px"
+                type="button"
+                class="btn btn-primary m-l-10 m-r-10"
+                disabled
+            >
+                Excluir
+            </button>
+            <button
+                style="margin-left: 10px"
+                type="button"
+                class="btn btn-primary m-l-10 m-r-10"
+                (click)="limpar()"
+            >
+                Limpar
+            </button>
+        </div>
+    </div>
+    <br />
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col" sbSortable="cliente" (sort)="onSort($event)">
+                    <span>Cliente</span
+                    ><sb-sort-icon
+                        *ngIf="sortedColumn === 'cliente'"
+                        [direction]="sortedDirection"
+                    ></sb-sort-icon>
+                </th>
+                <th scope="col" sbSortable="data" (sort)="onSort($event)">
+                    <span>Data</span
+                    ><sb-sort-icon
+                        *ngIf="sortedColumn === 'data'"
+                        [direction]="sortedDirection"
+                    ></sb-sort-icon>
+                </th>
+                <th scope="col" sbSortable="dtEntrega" (sort)="onSort($event)">
+                    <span>Data de entrega</span
+                    ><sb-sort-icon
+                        *ngIf="sortedColumn === 'dtEntrega'"
+                        [direction]="sortedDirection"
+                    ></sb-sort-icon>
+                </th>
+                <th scope="col" sbSortable="formaPagamento" (sort)="onSort($event)">
+                    <span>Forma Pagamento</span
+                    ><sb-sort-icon
+                        *ngIf="sortedColumn === 'formaPagamento'"
+                        [direction]="sortedDirection"
+                    ></sb-sort-icon>
+                </th>
+                <th scope="col" sbSortable="valor" (sort)="onSort($event)">
+                    <span>Preço</span
+                    ><sb-sort-icon
+                        *ngIf="sortedColumn === 'valor'"
+                        [direction]="sortedDirection"
+                    ></sb-sort-icon>
+                </th>
+                <th scope="col" sbSortable="tipoLente" (sort)="onSort($event)">
+                    <span>Tipo de Lente</span
+                    ><sb-sort-icon
+                        *ngIf="sortedColumn === 'tipoLente'"
+                        [direction]="sortedDirection"
+                    ></sb-sort-icon>
+                </th>
+                <th scope="col" sbSortable="noArmacao" (sort)="onSort($event)">
+                    <span>Tipo de Armação</span
+                    ><sb-sort-icon
+                        *ngIf="sortedColumn === 'noArmacao'"
+                        [direction]="sortedDirection"
+                    ></sb-sort-icon>
+                </th>
+                <th scope="col" sbSortable="funcionario" (sort)="onSort($event)">
+                    <span>Funcionario</span
+                    ><sb-sort-icon
+                        *ngIf="sortedColumn === 'funcionario'"
+                        [direction]="sortedDirection"
+                    ></sb-sort-icon>
+                </th>
+                <th scope="col" sbSortable="status" (sort)="onSort($event)">
+                    <span>Status</span
+                    ><sb-sort-icon
+                        *ngIf="sortedColumn === 'status'"
+                        [direction]="sortedDirection"
+                    ></sb-sort-icon>
+                </th>
+                <th scope="col">
+                    <span>Opções</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of listOrders | async">
+                <th scope="row">{{ order.id }}</th>
+                <td>
+                    <ngb-highlight
+                        [result]="order.cliente"
+                        [term]="countryService.searchTerm"
+                    ></ngb-highlight>
+                </td>
+                <td>
+                    <ngb-highlight
+                        [result]="order.data | date: 'dd/MM/yyyy'"
+                        [term]="countryService.searchTerm"
+                    ></ngb-highlight>
+                </td>
+                <td>
+                    <ngb-highlight
+                        [result]="order.dtEntrega | date: 'dd/MM/yyyy'"
+                        [term]="countryService.searchTerm"
+                    ></ngb-highlight>
+                </td>
+                <td>
+                    <ngb-highlight
+                        [result]="order.formaPagamento"
+                        [term]="countryService.searchTerm"
+                    ></ngb-highlight>
+                </td>
+                <td>
+                    R$
+                    <ngb-highlight
+                        [result]="order.valor | mask: '000,00'"
+                        [term]="countryService.searchTerm"
+                    ></ngb-highlight>
+                </td>
+                <td>
+                    <ngb-highlight
+                        [result]="order.tipoLente"
+                        [term]="countryService.searchTerm"
+                    ></ngb-highlight>
+                </td>
+                <td>
+                    <ngb-highlight
+                        [result]="order.noArmacao"
+                        [term]="countryService.searchTerm"
+                    ></ngb-highlight>
+                </td>
+                <td>
+                    <ngb-highlight
+                        [result]="order.noFuncionario"
+                        [term]="countryService.searchTerm"
+                    ></ngb-highlight>
+                </td>
+                <td>
+                    <ngb-highlight
+                        [result]="order.status"
+                        [term]="countryService.searchTerm"
+                    ></ngb-highlight>
+                </td>
+                <td>
+                    <input
+                        type="checkbox"
+                        [checked]="order.id == orderSelect.id"
+                        name=""
+                        id=""
+                        (click)="redirecionarFormularioEdicao(order)"
+                    />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="!isModal" class="d-flex justify-content-between p-2">
+        <ngb-pagination
+            [collectionSize]="total$ | async"
+            [(page)]="countryService.page"
+            [pageSize]="countryService.pageSize"
+        ></ngb-pagination
+        ><select
+            class="custom-select"
+            style="width: auto"
+            name="pageSize"
+            [(ngModel)]="countryService.pageSize"
+        >
+            <option [ngValue]="2">2 Itens por página</option>
+            <option [ngValue]="4">4 Itens por página</option>
+            <option [ngValue]="6">6 Itens por página</option>
+        </select>
+    </div>
+</form>
+
+<sb-card *ngIf="isModal">
+    <div
+        class="card-body"
+        style="
+            position: fixed;
+            top: 10%;
+            left: 10%;
+            width: 80%;
+            height: 100%;
+            background-color: white;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 10px;
+            border: 1px solid #8080803b;
+            box-shadow: 1px 1px #88888838;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            max-height: 550px;
+        "
+    >
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Informações da Ordem de Serviço</h4>
+            <h4 (click)="isModal = false" style="cursor: pointer; text-align: right">X</h4>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="row">
+                    <div class="col-md-4"><strong>Cliente: </strong> {{ orderSelect.cliente }}</div>
+                    <div class="col-md-4">
+                        <strong>Numero da Ordem: </strong> {{ orderSelect.id }}
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Data: </strong> {{ orderSelect.data | date: 'dd/MM/yyyy' }}
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Data de entrega: </strong>
+                        {{ orderSelect.dtEntrega | date: 'dd/MM/yyyy' }}
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Tipo de Lente: </strong> {{ orderSelect.tipoLente }}
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Tipo Armação: </strong> {{ orderSelect.noArmacao }}
+                    </div>
+
+                    <div
+                        class="col-md-12"
+                        style="margin-top: 20px; margin-bottom: 10px; overflow: auto"
+                    >
+                        <div class="row">
+                            <div
+                                class="col-md-2"
+                                style="
+                                    margin-left: 0px;
+                                    text-align: right;
+                                    margin-right: 0px;
+                                    margin-top: 10px;
+                                "
+                            >
+                                <br />
+                                <br />
+                                <br />
+                                <h5>LONGE</h5>
+                                <br />
+                                <br />
+                                <br />
+                                <h5>PERTO</h5>
+                                <br />
+                                <br />
+                                <br />
+                            </div>
+                            <div class="col-md-8">
+                                <table class="table table-striped">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th></th>
+                                            <th scope="col">ESF</th>
+                                            <th scope="col">CIL</th>
+                                            <th scope="col">EIXO</th>
+                                            <th scope="col">DNP</th>
+                                            <th>ALTURA</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>OD</td>
+                                            <td>
+                                                <input
+                                                    class="form-control ml-12"
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.esfLongeOD }}"
+                                                    id=""
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    class="form-control ml-12"
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.cilLongeOD }}"
+                                                    id=""
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    class="form-control ml-12"
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.eixoLongeOD }}"
+                                                    id=""
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.dnpLongeOD }}"
+                                                    class="form-control ml-12"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.alturaLongeOD }}"
+                                                    class="form-control ml-12"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>OE</td>
+                                            <td>
+                                                <input
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.esfLongeOE }}"
+                                                    class="form-control ml-12"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.cilLongeOE }}"
+                                                    class="form-control ml-12"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.eixoLongeOE }}"
+                                                    class="form-control ml-12"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.dnpLongeOE }}"
+                                                    class="form-control ml-12"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.alturaLongeOE }}"
+                                                    class="form-control ml-12"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>OD</td>
+                                            <td>
+                                                <input
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.esfPertoOD }}"
+                                                    class="form-control ml-12"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.cilPertoOD }}"
+                                                    class="form-control ml-12"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.eixoPertoOD }}"
+                                                    class="form-control ml-12"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.dnpPertoOD }}"
+                                                    class="form-control ml-12"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.alturaPertoOD }}"
+                                                    class="form-control ml-12"
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>OE</td>
+                                            <td>
+                                                <input
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.esfPertoOE }}"
+                                                    class="form-control ml-12"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.cilPertoOE }}"
+                                                    class="form-control ml-12"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.eixoPertoOE }}"
+                                                    class="form-control ml-12"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.dnpPertoOE }}"
+                                                    class="form-control ml-12"
+                                                />
+                                            </td>
+                                            <td>
+                                                <input
+                                                    style="width: 70px"
+                                                    type="text"
+                                                    disabled
+                                                    value="{{ orderSelect.alturaPertoOE }}"
+                                                    class="form-control ml-12"
+                                                />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <strong>Adição: </strong> {{ orderSelect.adicao | mask: '00.00' }}
+                    </div>
+
+                    <div class="col-md-4"><strong>Horario: </strong> {{ orderSelect.horario }}</div>
+                    <div class="col-md-4">
+                        <strong>DM: </strong> {{ orderSelect.vert | mask: '00.00' }}
+                    </div>
+                    <div class="col-md-4">
+                        <strong>HOR: </strong> {{ orderSelect.hor | mask: '00.00' }}
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Ponte: </strong> {{ orderSelect.ponte | mask: '00.00' }}
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Obs: </strong> {{ orderSelect.obs | mask: '00.00' }}
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5>Forma Pagamento</h5>
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Tipo de Pagamento:</strong> {{ orderSelect.formaPagamento }}
+                    </div>
+                    <div class="col-md-4" *ngIf="orderSelect.parcelaCatao">
+                        <strong>Numeros de Parcelas:</strong> {{ orderSelect.parcelaCatao }}
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Valor Recebido: </strong>R${{ orderSelect.valor | mask: '0000,00' }}
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Valor a Pagar: </strong> R${{
+                            orderSelect.valorApagar | mask: '0000,00'
+                        }}
+                    </div>
+                    <div class="col-md-4"><strong>Sinal:</strong> {{ orderSelect.sinal }}</div>
+                    <div class="col-md-4">
+                        <strong>Nome Funcionario:</strong> {{ orderSelect.noFuncionario }}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</sb-card>
