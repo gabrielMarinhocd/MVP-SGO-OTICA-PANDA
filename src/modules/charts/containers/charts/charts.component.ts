@@ -32,7 +32,7 @@ export class ChartsComponent implements OnInit {
     )
     {}
     ngOnInit() {
-        debugger;
+      
         this.sessionService.setItem('listOrders', listOrders);
         this.listOrders = this.sessionService.getItem('listOrders');
         this.createForm(new Order());
@@ -91,7 +91,7 @@ export class ChartsComponent implements OnInit {
     }
 
     verificaDados() {
-        debugger;
+      
         if (this.form.valid) {
             if (this.isAlteracao) {
                 // this.alterar();
@@ -103,7 +103,7 @@ export class ChartsComponent implements OnInit {
     }
 
     cadastrar() {
-        debugger
+      
         if (this.form.value.noArmacao) {
             this.form.value.lente = true;
         }
@@ -126,6 +126,7 @@ export class ChartsComponent implements OnInit {
         this.listOrders = this.sessionService.getItem('listOrders');
         this.createForm(new Order());
         window.location.href = './tables'
+        alert('Item cadastrado com SUCESSO!!')
     }
 
     option(id: number) {
@@ -133,7 +134,7 @@ export class ChartsComponent implements OnInit {
     }
 
     redirecionarFormularioEdicao(order: Order) {
-        debugger
+      
         this.orderSelect = order
         this.isModal = true;
     }

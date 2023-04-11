@@ -34,7 +34,7 @@ function compare(v1: any, v2: any) {
 function formateText(a: []) {
 
     let b: string = '';
-    debugger
+    
     if(a != null){
         a.forEach((a: any) => {
             b = `${b + a}`;
@@ -180,7 +180,7 @@ export class CountryService {
     }
 
     private _search(): Observable<SearchResult> {
-        debugger
+      
         let countries:any
         const {
             sortColumn,
@@ -211,7 +211,7 @@ export class CountryService {
             countries = countries.filter((Order: { data: string; }) => Order.data == filterDate);
         }
 
-        debugger 
+       
 
         if (filterCliente != '') {
             countries = countries.filter(
