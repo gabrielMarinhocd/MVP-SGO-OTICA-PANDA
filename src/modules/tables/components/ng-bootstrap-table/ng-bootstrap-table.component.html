@@ -37,8 +37,8 @@
                 (change)="selectStatus($event)"
             >
                 <option [ngValue]=""></option>
-                <option [ngValue]="ativo">Ativo</option>
-                <option [ngValue]="desativado">Desativado</option>
+                <option [ngValue]="aberto">aberto</option>
+                <option [ngValue]="fechado">fechado</option>
             </select>
         </div>
         <div class="col-md-3">
@@ -55,6 +55,35 @@
                 <option value="Cartão de Credito">Cartão de Credito</option>
                 <option value="Cartão de Debito">Cartão de Debito</option>
                 <option value="Boleto">Boleto</option>
+                <option value="Pix">Pix</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            Funcionario:
+            <select
+                class="form-control ml-12"
+                style="width: 100%; text-align: center"
+                name=""
+                id=""
+                (change)="selectFuncionario($event)"
+                disabled
+            >
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            Loja:
+            <select
+                class="form-control ml-12"
+                style="width: 100%; text-align: center"
+                name=""
+                id=""
+                (change)="selectFuncionario($event)"
+                disabled
+            >
+                <option value="Loja 01 - Feira Dos Importadoso">
+                    Loja 01 - Feira Dos Importados
+                </option>
             </select>
         </div>
         <div class="col-md-3">
@@ -275,9 +304,10 @@
             name="pageSize"
             [(ngModel)]="countryService.pageSize"
         >
-            <option [ngValue]="2">2 Itens por página</option>
-            <option [ngValue]="4">4 Itens por página</option>
             <option [ngValue]="6">6 Itens por página</option>
+            <option [ngValue]="10">10 Itens por página</option>
+            <option [ngValue]="20">20 Itens por página</option>
+            <option [ngValue]="30">30 Itens por página</option>
         </select>
     </div>
 </form>
@@ -604,7 +634,7 @@
                             orderSelect.valorApagar | mask: '0000,00'
                         }}
                     </div>
-                    <div class="col-md-4"><strong>Sinal:</strong> {{ orderSelect.sinal }}</div>
+                    <!-- <div class="col-md-4"><strong>Sinal:</strong> {{ orderSelect.sinal }}</div> -->
                     <div class="col-md-4">
                         <strong>Nome Funcionario:</strong> {{ orderSelect.noFuncionario }}
                     </div>

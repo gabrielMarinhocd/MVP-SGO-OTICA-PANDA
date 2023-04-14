@@ -125,7 +125,7 @@ export class ChartsComponent implements OnInit {
         this.sessionService.setItem('listOrders', this.listOrders);
         this.listOrders = this.sessionService.getItem('listOrders');
         this.createForm(new Order());
-        window.location.href = './tables'
+        window.location.href = '/tables'
         alert('Item cadastrado com SUCESSO!!')
     }
 

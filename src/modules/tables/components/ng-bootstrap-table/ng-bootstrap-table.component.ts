@@ -63,22 +63,27 @@ export class NgBootstrapTableComponent implements OnInit {
     }
 
     redirecionarFormularioEdicao(order: Order) {
-        debugger
+         
         this.orderSelect = order;
     }
 
     selectStatus(event: any) {
-        debugger;
+         ;
+        this.filterStatus = event.target.value.toLocaleLowerCase();
+    }
+
+    selectFuncionario(event: any) {
+         ;
         this.filterStatus = event.target.value.toLocaleLowerCase();
     }
 
     selectPagamento(event: any) {
-        debugger;
+         ;
         this.filterPagamento = event.target.value;
     }
 
     selectArmacao(event: any) {
-        debugger;
+         ;
         this.filterArmacao = event.target.value;
     }
 

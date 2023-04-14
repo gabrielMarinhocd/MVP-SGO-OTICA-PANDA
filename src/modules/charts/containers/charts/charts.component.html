@@ -108,7 +108,7 @@
                             style="width: 100%"
                         />
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <label>Email: </label>
 
                         <input
@@ -121,7 +121,7 @@
                         />
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label>Telefone: </label>
 
                         <input
@@ -133,6 +133,22 @@
                             style="width: 100%"
                             mask="(00) 0000-0000"
                         />
+                    </div>
+                    <div class="col-md-3">
+                        <label>Loja: </label>
+
+                        <select
+                            class="form-control ml-12"
+                            style="width: 100%; text-align: center"
+                            name=""
+                            id=""
+                            disabled
+                        >
+
+                            <option value="Loja 01 - Feira Dos Importadoso">
+                                Loja 01 - Feira Dos Importados
+                            </option>
+                        </select>
                     </div>
                 </div>
                 <div class="row">
@@ -171,7 +187,7 @@
                             formControlName="noArmacao"
                         >
                             <option value="Próprio">Próprio</option>
-                            <option value="Armações Loja"> Armações Loja</option>
+                            <option value="Armações Loja">Armações Loja</option>
                         </select>
                     </div>
                     <div class="col-md-3">
@@ -259,7 +275,7 @@
                                             name=""
                                             formControlName="eixoLongeOD"
                                             id=""
-                                            mask="00.00"
+                                            mask="000"
                                             [patterns]="customPatterns"
                                             [dropSpecialCharacters]="false"
                                         />
@@ -322,7 +338,7 @@
                                             type="text"
                                             name=""
                                             formControlName="eixoLongeOE"
-                                            mask="00.00"
+                                            mask="000"
                                             [patterns]="customPatterns"
                                             [dropSpecialCharacters]="false"
                                         />
@@ -385,7 +401,7 @@
                                             type="text"
                                             name=""
                                             formControlName="eixoPertoOD"
-                                            mask="00.00"
+                                            mask="000"
                                             [patterns]="customPatterns"
                                             [dropSpecialCharacters]="false"
                                         />
@@ -448,8 +464,7 @@
                                             type="text"
                                             name=""
                                             formControlName="eixoPertoOE"
-                                            mask="00.00"
-                                            [patterns]="customPatterns"
+                                            mask="000"
                                             [dropSpecialCharacters]="false"
                                         />
                                     </td>
@@ -515,6 +530,7 @@
                             type="text"
                             name=""
                             formControlName="dm"
+                            mask="00.00"
                             id=""
                         />
                     </div>
@@ -581,6 +597,7 @@
                             <option value="Cartão de Debito">Cartão de Debito</option>
                             <option value="Boleto">Boleto</option>
                             <option value="Dinheiro">Dinheiro</option>
+                            <option value="Pix">Pix</option>
                         </select>
                     </div>
                     <div class="col-md-2" *ngIf="form.value.formaPagamento == 'Cartão de Credito'">
@@ -618,10 +635,10 @@
                             mask="0*,00"
                         />
                     </div>
-                    <div class="col-md-2">
+                    <!-- <div class="col-md-2">
                         <label for="">Sinal:</label>
                         <input class="form-control ml-12" type="text" formControlName="sinal" />
-                    </div>
+                    </div> -->
                 </div>
             </form>
             <br />
