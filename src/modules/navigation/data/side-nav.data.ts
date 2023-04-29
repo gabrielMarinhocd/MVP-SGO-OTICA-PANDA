@@ -46,14 +46,7 @@ export const sideNavItems: SideNavItems = {
                         text: 'Login',
                         link: '/auth/login',
                     },
-                    {
-                        text: 'Register',
-                        link: '/auth/register',
-                    },
-                    {
-                        text: 'Forgot Password',
-                        link: '/auth/forgot-password',
-                    },
+                   
                 ],
             },
             {
@@ -86,3 +79,12 @@ export const sideNavItems: SideNavItems = {
         link: '/tables',
     },
 };
+
+// {
+//     text: 'Register',
+//     link: '/auth/register',
+// },
+// {
+//     text: 'Forgot Password',
+//     link: '/auth/forgot-password',
+// },
